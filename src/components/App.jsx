@@ -14,10 +14,7 @@ export const App = () => {
           <Route path={routes.packInfo} element={<PackInfo />} />
         </Route>
         <Route path={routes.departList} element={<DepartList />} />
-        {/* <Route path={routes.movieId} element={<MovieDetails />}>
-          <Route path={routes.cast} element={<Cast />} />
-          <Route path={routes.reviews} element={<Reviews />} />
-        </Route> */}
+
         <Route path="*" element={<Navigate to={routes.home} />} />
       </Route>
     </Routes>

@@ -1,7 +1,12 @@
+import PackageInfo from 'components/PackageInfo/PackageInfo';
 import React from 'react';
 
 const PackInfo = () => {
-  return <div></div>;
+  return (
+    <>
+      <PackageInfo />
+    </>
+  );
 };
 
 export default PackInfo;

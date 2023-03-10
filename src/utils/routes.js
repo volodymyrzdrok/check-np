@@ -1,6 +1,6 @@
 const routes = {
   home: '/',
-  packInfo: '/:number',
+  packInfo: ':ttn',
   departList: 'departments',
 };
 export default routes;
