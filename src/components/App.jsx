@@ -14,7 +14,6 @@ export const App = () => {
           <Route path={routes.packInfo} element={<PackInfo />} />
         </Route>
         <Route path={routes.departList} element={<DepartList />} />
-
         <Route path="*" element={<Navigate to={routes.home} />} />
       </Route>
     </Routes>
