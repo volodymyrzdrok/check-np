@@ -21,3 +21,18 @@ export async function fetchPackageDetails(ttn_number) {
     console.error(error);
   }
 }
+
+// {
+//    "apiKey": "[ВАШ КЛЮЧ]",
+//    "modelName": "Address",
+//    "calledMethod": "getWarehouses",
+//    "methodProperties": {
+// "CityName" : "Київ",
+// "CityRef" : "00000000-0000-0000-0000-000000000000",
+// "Page" : "1",
+// "Limit" : "50",
+// "Language" : "UA",
+// "TypeOfWarehouseRef" : "00000000-0000-0000-0000-000000000000",
+// "WarehouseId" : "151"
+//    }
+// }

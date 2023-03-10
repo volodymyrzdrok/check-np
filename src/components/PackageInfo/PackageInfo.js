@@ -23,6 +23,7 @@ const PackageInfo = () => {
   };
 
   useEffect(() => {
+    setPackInfo(null);
     getPackageDetails(ttn);
   }, [ttn]);
 
