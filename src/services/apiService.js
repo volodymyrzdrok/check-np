@@ -22,17 +22,22 @@ export async function fetchPackageDetails(ttn_number) {
   }
 }
 
-// {
-//    "apiKey": "[ВАШ КЛЮЧ]",
-//    "modelName": "Address",
-//    "calledMethod": "getWarehouses",
-//    "methodProperties": {
-// "CityName" : "Київ",
-// "CityRef" : "00000000-0000-0000-0000-000000000000",
-// "Page" : "1",
-// "Limit" : "50",
-// "Language" : "UA",
-// "TypeOfWarehouseRef" : "00000000-0000-0000-0000-000000000000",
-// "WarehouseId" : "151"
-//    }
-// }
+export async function fetchDepartamentsList(city_name) {
+  try {
+    const { data } = await axios.post(NP_URL, {
+      apiKey: KEY_API,
+      modelName: 'Address',
+      calledMethod: 'getWarehouses',
+      methodProperties: {
+        CityName: city_name,
+
+        Page: '1',
+        Limit: '50',
+        Language: 'UA',
+      },
+    });
+    return data;
+  } catch (error) {
+    console.error(error);
+  }
+}

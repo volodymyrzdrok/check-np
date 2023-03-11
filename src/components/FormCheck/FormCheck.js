@@ -1,8 +1,8 @@
 import { useFormik } from 'formik';
 import { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
-import { addToHistory } from 'redux/appSlice';
+import { addToHistory, selectHistoryPackList } from 'redux/appSlice';
 
 import { ttnCheckShema } from 'utils/validations';
 
@@ -10,8 +10,8 @@ const FormCheck = () => {
   const navigate = useNavigate();
   const { ttn } = useParams();
   const dispatch = useDispatch();
-
   const [defaultValue, setDefaultValue] = useState(ttn ?? '');
+  const historyList = useSelector(selectHistoryPackList);
 
   useEffect(() => {
     setDefaultValue(ttn);
@@ -23,15 +23,15 @@ const FormCheck = () => {
     },
     validationSchema: ttnCheckShema,
     onSubmit: ({ number }) => {
-      // console.log('number :', number);
-
-      dispatch(addToHistory(defaultValue));
-      navigate(`/${number}`);
+      console.log('number :', number);
+      if (!historyList.includes(defaultValue)) {
+        dispatch(addToHistory(defaultValue));
+      }
+      navigate(`/${defaultValue}`);
     },
   });
 
   const { errors, touched } = formik;
-
   return (
     <form action="" onSubmit={formik.handleSubmit}>
       <p style={{ color: 'red' }}>
@@ -52,7 +52,6 @@ const FormCheck = () => {
     </form>
   );
 };
-
 export default FormCheck;
 
 // const handleSubmit = e => {

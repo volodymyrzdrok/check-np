@@ -6,3 +6,10 @@ export const ttnCheckShema = Yup.object().shape({
     .matches(/^([0]([.][0-9]+)?|[1-9]([0-9]+)?([.][0-9]+)?)$/)
     .required('Required'),
 });
+
+export const nameCityShema = Yup.object().shape({
+  city: Yup.string()
+
+    .matches(/[А-яЁё]/, 'only curilic letters!')
+    .required('Required'),
+});
