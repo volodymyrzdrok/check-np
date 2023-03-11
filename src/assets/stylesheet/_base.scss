@@ -11,7 +11,7 @@ html {
 }
 
 body {
-  margin: 200px;
+  margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Poppins', 'Circe', sans-serif;
   // font-size: 18px;
   // color: $mainTextColor;
@@ -72,11 +72,3 @@ button {
     width: $desktop;
   }
 }
-
-// input:valid {
-//   background-color: palegreen;
-// }
-
-// input:invalid {
-//   background-color: lightpink;
-// }
