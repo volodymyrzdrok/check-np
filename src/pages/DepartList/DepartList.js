@@ -1,7 +1,12 @@
+import DepartmentsList from 'components/DepartmentsList/DepartmentsList';
 import React from 'react';
 
 const DepartList = () => {
-  return <div>dep list</div>;
+  return (
+    <div>
+      <DepartmentsList />
+    </div>
+  );
 };
 
 export default DepartList;
