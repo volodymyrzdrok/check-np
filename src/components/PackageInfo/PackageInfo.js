@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
+// import { useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
-import { addToHistory } from 'redux/appSlice';
+// import {  } from 'redux/appSlice';
 import { fetchPackageDetails } from 'services/apiService';
 
 const PackageInfo = () => {
   const [packInfo, setPackInfo] = useState(null);
   const { ttn } = useParams();
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
 
   const getPackageDetails = async ttn => {
     try {

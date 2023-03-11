@@ -1,7 +1,7 @@
 import { useFormik } from 'formik';
 import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { addToHistory } from 'redux/appSlice';
 
 import { ttnCheckShema } from 'utils/validations';
