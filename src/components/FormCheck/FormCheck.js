@@ -23,7 +23,7 @@ const FormCheck = () => {
     },
     validationSchema: ttnCheckShema,
     onSubmit: ({ number }) => {
-      console.log('number :', number);
+      // console.log('number :', number);
 
       dispatch(addToHistory(defaultValue));
       navigate(`/${number}`);

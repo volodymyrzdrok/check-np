@@ -11,7 +11,7 @@ const appSlice = createSlice({
   initialState: defaultState,
   reducers: {
     addToHistory(state, action) {
-      console.log('action.payload :', action.payload);
+      // console.log('action.payload :', action.payload);
       state.history = [action.payload, ...state.history];
     },
     removeHistory(state, _) {
