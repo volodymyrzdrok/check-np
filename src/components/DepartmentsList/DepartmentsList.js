@@ -1,6 +1,6 @@
-import React, { useMemo, useState } from 'react';
+import React, { useState } from 'react';
 import { fetchDepartamentsList } from 'services/apiService';
-import debounce from 'lodash.debounce';
+
 import { useFormik } from 'formik';
 import { nameCityShema } from 'utils/validations';
 
@@ -51,19 +51,3 @@ const DepartmentsList = () => {
 };
 
 export default DepartmentsList;
-
-// const onChangeInput = async e => {
-//   const nameCity = e.target.value.trim();
-
-//   try {
-//     const { data } = await fetchDepartamentsList(nameCity);
-//     setDepList(data);
-//   } catch (err) {
-//     console.log(err);
-//   }
-// };
-
-// const debouncedChangeHandler = useMemo(
-//   () => debounce(onChangeInput, 200),
-//   []
-// );

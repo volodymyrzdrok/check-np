@@ -3,7 +3,6 @@ import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 import { addToHistory, selectHistoryPackList } from 'redux/appSlice';
-
 import { ttnCheckShema } from 'utils/validations';
 
 const FormCheck = () => {
@@ -19,11 +18,10 @@ const FormCheck = () => {
 
   const formik = useFormik({
     initialValues: {
-      number: defaultValue,
+      number: '',
     },
     validationSchema: ttnCheckShema,
     onSubmit: ({ number }) => {
-      console.log('number :', number);
       if (!historyList.includes(defaultValue)) {
         dispatch(addToHistory(defaultValue));
       }
@@ -43,8 +41,7 @@ const FormCheck = () => {
         required
         onChange={e => {
           setDefaultValue(e.target.value);
-
-          formik.setFieldValue('number', defaultValue);
+          formik.setFieldValue('number', e.target.value);
         }}
         value={defaultValue ?? ''}
       />
@@ -53,15 +50,3 @@ const FormCheck = () => {
   );
 };
 export default FormCheck;
-
-// const handleSubmit = e => {
-//   e.preventDefault();
-//   dispatch(addToHistory(e.target.number.value));
-// };
-
-// onChange={e => {
-//   setDefaultValue(e.target.value);
-// }}
-// value={defaultValue ?? ''}
-
-// onChange={formik.handleChange}
