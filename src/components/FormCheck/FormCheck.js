@@ -4,11 +4,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 import { addToHistory, selectHistoryPackList } from 'redux/appSlice';
 import { ttnCheckShema } from 'utils/validations';
-// import Box from '@mui/material/Box';
-// import TextField from '@mui/material/TextField';
+import { useMediaQuery } from 'react-responsive';
 import { Button, Box, TextField } from '@mui/material';
+import { brackToMobile } from 'utils/constants';
 
 const FormCheck = () => {
+  const toMobile = useMediaQuery({ query: brackToMobile });
   const navigate = useNavigate();
   const { ttn } = useParams();
   const dispatch = useDispatch();
@@ -25,7 +26,6 @@ const FormCheck = () => {
     },
     validationSchema: ttnCheckShema,
     onSubmit: ({ number }) => {
-      console.log('number :', number);
       if (!historyList.includes(defaultValue)) {
         dispatch(addToHistory(defaultValue));
       }
@@ -35,43 +35,23 @@ const FormCheck = () => {
 
   const { errors, touched } = formik;
   return (
-    // <form action="" onSubmit={formik.handleSubmit}>
-    //   <p style={{ color: 'red' }}>
-    //     {errors.number && touched.number ? errors.number : null}
-    //   </p>
-    //   <input
-    //     type="number"
-    //     name="number"
-    //     required
-    //     onChange={e => {
-    //       setDefaultValue(e.target.value);
-    //       formik.setFieldValue('number', e.target.value);
-    //     }}
-    //     value={defaultValue ?? ''}
-    //   />
-    //   <button type="submit">Get status TTN</button>
-    // </form>
     <Box
       onSubmit={formik.handleSubmit}
       component="form"
       sx={{
-        // '& > :not(style)': { m: 2, width: '25ch' },
-        // border: '1px solid black',
         mt: 3,
         mb: 3,
         display: 'flex',
         alignItems: 'center',
       }}
-      // validate="true"
       autoComplete="off"
     >
       <TextField
-        sx={{ mr: 3 }}
+        sx={{ mr: toMobile ? 1 : 3, px: toMobile && 0 }}
         required
         type="number"
         name="number"
         inputProps={{ inputMode: 'numeric', pattern: '[0-9]*' }}
-        // helperText={errors.number && touched.number ? errors.number : null}
         label={errors.number && touched.number ? errors.number : null}
         variant="outlined"
         color="grey"
@@ -88,7 +68,7 @@ const FormCheck = () => {
         color="error"
         sx={{ px: 0.5 }}
       >
-        Get status TTN
+        {toMobile ? 'Get TTN' : ' Get status TTN'}
       </Button>
     </Box>
   );

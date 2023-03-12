@@ -5,8 +5,6 @@ const NotificationDoc = () => {
   return (
     <Box
       sx={{
-        display: 'flex',
-        justifyContent: 'center',
         p: 2,
       }}
     >

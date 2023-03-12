@@ -63,17 +63,12 @@ const HistoryPackList = () => {
       <Box
         sx={{
           width: '100%',
-          // height: 350,
-          // maxWidth: 360,
-          // bgcolor: 'background.paper',
         }}
       >
         <FixedSizeList
           height={300}
-          // maxWidth={360}
           itemSize={46}
           itemCount={itemsArray.length}
-          // overscanCount={55}
           itemData={itemsArray}
         >
           {ItemRenderer}
