@@ -1,8 +1,8 @@
 import { Container, Typography } from '@mui/material';
 import ButtonsStatus from 'components/ButtonsStatus/ButtonsStatus';
-import React from 'react';
+import Loader from '../Loader/Loader';
+import { Suspense } from 'react';
 import { Outlet } from 'react-router-dom';
-
 const Layout = () => {
   return (
     <Container maxWidth="md" sx={{ border: '1px solid black', pt: 3 }}>
@@ -10,7 +10,9 @@ const Layout = () => {
         Перевірка статусу посилки
       </Typography>
       <ButtonsStatus />
-      <Outlet />
+      <Suspense fallback={<Loader />}>
+        <Outlet />
+      </Suspense>
     </Container>
   );
 };

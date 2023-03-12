@@ -1,10 +1,10 @@
-import DepartList from 'pages/DepartList/DepartList';
-import Home from 'pages/Home/Home';
-import PackInfo from 'pages/PackInfo/PackInfo';
 import { Routes, Route, Navigate } from 'react-router-dom';
-
+import { lazy } from 'react';
 import routes from 'utils/routes';
 import Layout from './Layout/Layout';
+const Home = lazy(() => import('pages/Home/Home'));
+const PackInfo = lazy(() => import('pages/PackInfo/PackInfo'));
+const DepartList = lazy(() => import('pages/DepartList/DepartList'));
 
 export const App = () => {
   return (
