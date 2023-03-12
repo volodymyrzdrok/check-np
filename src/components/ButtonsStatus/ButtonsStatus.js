@@ -1,18 +1,24 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import routes from 'utils/routes';
+// import Button from '@mui/material/Button';
+import { Box, Button } from '@mui/material';
 
 const ButtonsStatus = () => {
   return (
-    <div>
-      <button>
-        <NavLink to={routes.home}>Перевірка ТТН</NavLink>
-      </button>
+    <Box sx={{ my: 2 }}>
+      <NavLink to={routes.home}>
+        <Button variant="contained" color="error" sx={{ mr: 3 }}>
+          Перевірка ТТН
+        </Button>
+      </NavLink>
 
-      <button>
-        <NavLink to={routes.departList}>Список відділень</NavLink>
-      </button>
-    </div>
+      <NavLink to={routes.departList}>
+        <Button variant="contained" color="error">
+          Список відділень
+        </Button>
+      </NavLink>
+    </Box>
   );
 };
 

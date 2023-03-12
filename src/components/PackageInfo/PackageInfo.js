@@ -1,3 +1,4 @@
+import NotificationDoc from 'components/NotificationDoc/NotificationDoc';
 import React, { useEffect, useState } from 'react';
 // import { useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
@@ -35,7 +36,7 @@ const PackageInfo = () => {
 
   return (
     <>
-      {packInfo && (
+      {packInfo ? (
         <div>
           <b>
             <p>Статус: </p>
@@ -50,6 +51,8 @@ const PackageInfo = () => {
           </b>
           <p>{packInfo.WarehouseRecipientAddress}</p>
         </div>
+      ) : (
+        <NotificationDoc />
       )}
     </>
   );

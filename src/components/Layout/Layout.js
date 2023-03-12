@@ -1,14 +1,17 @@
+import { Container, Typography } from '@mui/material';
 import ButtonsStatus from 'components/ButtonsStatus/ButtonsStatus';
 import React from 'react';
 import { Outlet } from 'react-router-dom';
 
 const Layout = () => {
   return (
-    <div>
-      <h1>app check nova post</h1>
+    <Container maxWidth="md" sx={{ border: '1px solid black' }}>
+      <Typography component="h1" sx={{ fontWeight: '800', fontSize: '27px' }}>
+        Перевірка статусу посилки
+      </Typography>
       <ButtonsStatus />
       <Outlet />
-    </div>
+    </Container>
   );
 };
 

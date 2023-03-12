@@ -2,31 +2,84 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import { removeHistory, selectHistoryPackList } from 'redux/appSlice';
+import DeleteIcon from '@mui/icons-material/Delete';
+
+import {
+  ListItemText,
+  ListItemButton,
+  ListItem,
+  Box,
+  Typography,
+  Button,
+} from '@mui/material';
+import { FixedSizeList } from 'react-window';
+
+function ItemRenderer({ data, index }) {
+  const item = data[index];
+
+  return (
+    <ListItem
+      key={index}
+      component={NavLink}
+      to={`/${item}`}
+      sx={{ color: 'grey' }}
+      disablePadding
+    >
+      <ListItemButton color="primary">
+        <ListItemText primary={item} />
+      </ListItemButton>
+    </ListItem>
+  );
+}
 
 const HistoryPackList = () => {
-  const historyList = useSelector(selectHistoryPackList);
+  const itemsArray = useSelector(selectHistoryPackList);
   const dispatch = useDispatch();
 
-  // console.log('historyList :', historyList);
   return (
-    <div>
-      <p>Історія</p>
-      <ul>
-        {historyList.length > 0 &&
-          historyList.map((el, i) => (
-            <li key={i}>
-              <NavLink to={`/${el}`}>{el}</NavLink>
-            </li>
-          ))}
-      </ul>
-      <button
-        onClick={() => {
-          dispatch(removeHistory());
+    <Box sx={{ border: '1px solid black', maxWidth: 260 }}>
+      <Box
+        sx={{
+          display: 'flex',
+          alignItems: 'center',
+          px: 2,
         }}
       >
-        remov history
-      </button>
-    </div>
+        <Typography
+          component="h2"
+          varian="h2"
+          sx={{ fontWeight: '600', mr: 5 }}
+        >
+          Історія
+        </Typography>
+        <Button
+          onClick={() => {
+            dispatch(removeHistory());
+          }}
+        >
+          <DeleteIcon color="error" />
+        </Button>
+      </Box>
+      <Box
+        sx={{
+          width: '100%',
+          // height: 350,
+          // maxWidth: 360,
+          // bgcolor: 'background.paper',
+        }}
+      >
+        <FixedSizeList
+          height={300}
+          // maxWidth={360}
+          itemSize={46}
+          itemCount={itemsArray.length}
+          // overscanCount={55}
+          itemData={itemsArray}
+        >
+          {ItemRenderer}
+        </FixedSizeList>
+      </Box>
+    </Box>
   );
 };
 
