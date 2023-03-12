@@ -1,15 +1,17 @@
+import Loader from 'components/Loader/Loader';
+import NotificationDoc from 'components/NotificationDoc/NotificationDoc';
 import React, { useEffect, useState } from 'react';
-// import { useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
-// import {  } from 'redux/appSlice';
 import { fetchPackageDetails } from 'services/apiService';
 
 const PackageInfo = () => {
   const [packInfo, setPackInfo] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
   const { ttn } = useParams();
-  // const dispatch = useDispatch();
 
   const getPackageDetails = async ttn => {
+    setIsLoading(true);
+    setPackInfo(null);
     try {
       const resp = await fetchPackageDetails(ttn);
       if (!resp.success) {
@@ -17,15 +19,17 @@ const PackageInfo = () => {
         return;
       }
       if (resp.data[0].StatusCode === '3') {
-        // dispatch(addToHistory(ttn));
         console.log('Documents number not found!');
         return;
       }
 
       console.log(' everything is ok');
       setPackInfo(resp.data[0]);
-      // dispatch(addToHistory(ttn));
-    } catch (error) {}
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   useEffect(() => {
@@ -35,7 +39,9 @@ const PackageInfo = () => {
 
   return (
     <>
-      {packInfo && (
+      {isLoading ? (
+        <Loader />
+      ) : packInfo ? (
         <div>
           <b>
             <p>Статус: </p>
@@ -50,6 +56,8 @@ const PackageInfo = () => {
           </b>
           <p>{packInfo.WarehouseRecipientAddress}</p>
         </div>
+      ) : (
+        <NotificationDoc />
       )}
     </>
   );

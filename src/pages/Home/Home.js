@@ -1,22 +1,43 @@
+import { Box } from '@mui/system';
 import FormCheck from 'components/FormCheck/FormCheck';
 import HistoryPackList from 'components/HistoryPackList/HistoryPackList';
-import React from 'react';
+import NotificationDoc from 'components/NotificationDoc/NotificationDoc';
+import React, { Suspense } from 'react';
 import { Outlet, useLocation } from 'react-router-dom';
 import routes from 'utils/routes';
-
+import { useMediaQuery } from 'react-responsive';
+import { brackFromTablet } from 'utils/constants';
+import Loader from 'components/Loader/Loader';
 const Home = () => {
   const location = useLocation();
 
+  const fromTablet = useMediaQuery({ query: brackFromTablet });
   return (
-    <div>
+    <>
       <FormCheck />
-      <br />
-      {location.pathname === routes.home && <p>let's write our TTN</p>}
-      <br />
-      <Outlet />
-      <br />
-      <HistoryPackList />
-    </div>
+      <Box
+        sx={{
+          display: fromTablet && 'flex',
+          justifyContent: 'space-between',
+        }}
+      >
+        <Box
+          sx={{
+            width: fromTablet ? '100%' : 'inherit',
+            mb: !fromTablet && 3,
+            border: '1px solid black',
+            mr: 5,
+          }}
+        >
+          {location.pathname === routes.home && <NotificationDoc />}
+
+          <Suspense fallback={<Loader />}>
+            <Outlet />
+          </Suspense>
+        </Box>
+        <HistoryPackList />
+      </Box>
+    </>
   );
 };
 
