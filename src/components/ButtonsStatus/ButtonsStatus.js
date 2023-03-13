@@ -9,7 +9,7 @@ const ButtonsStatus = () => {
   const toMobile = useMediaQuery({ query: brackToMobile });
   return (
     <Box sx={{ my: 2 }}>
-      <NavLink to={routes.home}>
+      <NavLink to={routes.home} style={isActiveFunc()}>
         <Button
           variant="contained"
           color="error"
@@ -19,7 +19,7 @@ const ButtonsStatus = () => {
         </Button>
       </NavLink>
 
-      <NavLink to={routes.departList}>
+      <NavLink to={routes.departList} style={isActiveFunc()}>
         <Button
           variant="contained"
           color="error"
@@ -33,3 +33,12 @@ const ButtonsStatus = () => {
 };
 
 export default ButtonsStatus;
+
+function isActiveFunc() {
+  return ({ isActive }) =>
+    isActive
+      ? {
+          filter: 'drop-shadow(5px 5px 5px rgba(0,0,0,0.5))',
+        }
+      : {};
+}

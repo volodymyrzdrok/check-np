@@ -5,7 +5,10 @@ import { Suspense } from 'react';
 import { Outlet } from 'react-router-dom';
 const Layout = () => {
   return (
-    <Container maxWidth="md" sx={{ border: '1px solid black', pt: 3 }}>
+    <Container
+      maxWidth="md"
+      sx={{ border: '1px solid black', pt: 3, minHeight: '100vh' }}
+    >
       <Typography component="h1" sx={{ fontWeight: '800', fontSize: '27px' }}>
         Перевірка статусу посилки
       </Typography>

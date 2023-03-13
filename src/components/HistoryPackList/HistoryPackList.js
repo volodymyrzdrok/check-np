@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import { removeHistory, selectHistoryPackList } from 'redux/appSlice';
 import DeleteIcon from '@mui/icons-material/Delete';
-
 import {
   ListItemText,
   ListItemButton,
@@ -13,35 +12,23 @@ import {
   Button,
 } from '@mui/material';
 import { FixedSizeList } from 'react-window';
-
-function ItemRenderer({ data, index }) {
-  const item = data[index];
-
-  return (
-    <ListItem
-      key={index}
-      component={NavLink}
-      to={`/${item}`}
-      sx={{ color: 'grey' }}
-      disablePadding
-    >
-      <ListItemButton color="primary">
-        <ListItemText primary={item} />
-      </ListItemButton>
-    </ListItem>
-  );
-}
+import { brackFromTablet } from 'utils/constants';
+import { useMediaQuery } from 'react-responsive';
 
 const HistoryPackList = () => {
+  const fromTablet = useMediaQuery({ query: brackFromTablet });
   const itemsArray = useSelector(selectHistoryPackList);
   const dispatch = useDispatch();
 
   return (
-    <Box sx={{ border: '1px solid black', maxWidth: 260 }}>
+    <Box
+      sx={{ border: '1px solid black', maxWidth: fromTablet ? 260 : '100vw' }}
+    >
       <Box
         sx={{
           display: 'flex',
           alignItems: 'center',
+          justifyContent: !fromTablet && 'space-between',
           px: 2,
         }}
       >
@@ -56,9 +43,8 @@ const HistoryPackList = () => {
           onClick={() => {
             dispatch(removeHistory());
           }}
-        >
-          <DeleteIcon color="error" />
-        </Button>
+        ></Button>
+        {itemsArray.length > 0 && <DeleteIcon color="error" />}
       </Box>
       <Box
         sx={{
@@ -79,3 +65,21 @@ const HistoryPackList = () => {
 };
 
 export default HistoryPackList;
+
+function ItemRenderer({ data, index }) {
+  const item = data[index];
+
+  return (
+    <ListItem
+      key={index}
+      component={NavLink}
+      to={`/${item}`}
+      sx={{ color: 'grey' }}
+      disablePadding
+    >
+      <ListItemButton color="primary">
+        <ListItemText primary={item} />
+      </ListItemButton>
+    </ListItem>
+  );
+}
