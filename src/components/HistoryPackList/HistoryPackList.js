@@ -43,8 +43,9 @@ const HistoryPackList = () => {
           onClick={() => {
             dispatch(removeHistory());
           }}
-        ></Button>
-        {itemsArray.length > 0 && <DeleteIcon color="error" />}
+        >
+          <DeleteIcon color="error" />
+        </Button>
       </Box>
       <Box
         sx={{
