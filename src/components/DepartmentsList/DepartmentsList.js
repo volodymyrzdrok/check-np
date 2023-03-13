@@ -57,7 +57,6 @@ const DepartmentsList = () => {
     onSubmit: ({ city }) => {
       setCityNameValue(city.trim());
       setPage(1);
-      getDepartList(city, 1);
     },
   });
 
