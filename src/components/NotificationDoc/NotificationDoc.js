@@ -1,16 +1,14 @@
 import { Typography } from '@mui/material';
 import { Box } from '@mui/system';
 
-const NotificationDoc = () => {
+const NotificationDoc = ({ title = ' Внесіть коректний номер ТТН' }) => {
   return (
     <Box
       sx={{
         p: 2,
       }}
     >
-      <Typography sx={{ fontSize: '20px', color: 'grey' }}>
-        Внесіть коректний номер ТТН
-      </Typography>
+      <Typography sx={{ fontSize: '20px', color: 'grey' }}>{title}</Typography>
     </Box>
   );
 };

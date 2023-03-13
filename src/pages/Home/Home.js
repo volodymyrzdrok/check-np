@@ -26,7 +26,7 @@ const Home = () => {
             width: fromTablet ? '100%' : 'inherit',
             mb: !fromTablet && 3,
             border: '1px solid black',
-            mr: 5,
+            mr: fromTablet && 5,
           }}
         >
           {location.pathname === routes.home && <NotificationDoc />}

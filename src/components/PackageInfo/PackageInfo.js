@@ -1,8 +1,11 @@
+import { Box, Typography } from '@mui/material';
 import Loader from 'components/Loader/Loader';
 import NotificationDoc from 'components/NotificationDoc/NotificationDoc';
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { fetchPackageDetails } from 'services/apiService';
+import { ToastContainer, toast } from 'react-toastify';
+import { settingAlert } from 'utils/settingAlert';
 
 const PackageInfo = () => {
   const [packInfo, setPackInfo] = useState(null);
@@ -11,19 +14,16 @@ const PackageInfo = () => {
 
   const getPackageDetails = async ttn => {
     setIsLoading(true);
-    setPackInfo(null);
     try {
       const resp = await fetchPackageDetails(ttn);
       if (!resp.success) {
-        console.log('Document number is not correct!');
+        toast.error('Document number is not correct!', settingAlert());
         return;
       }
       if (resp.data[0].StatusCode === '3') {
-        console.log('Documents number not found!');
+        toast.warning('Documents number not found!', settingAlert());
         return;
       }
-
-      console.log(' everything is ok');
       setPackInfo(resp.data[0]);
     } catch (error) {
       console.log(error);
@@ -42,23 +42,30 @@ const PackageInfo = () => {
       {isLoading ? (
         <Loader />
       ) : packInfo ? (
-        <div>
-          <b>
-            <p>Статус: </p>
-          </b>
-          <p>{packInfo.Status}</p>
-          <b>
-            <p>Відправлено: </p>
-          </b>
-          <p>{packInfo.WarehouseSender}</p>
-          <b>
-            <p>Oтримано: </p>
-          </b>
-          <p>{packInfo.WarehouseRecipientAddress}</p>
-        </div>
+        <Box sx={{ p: 3 }}>
+          <Typography sx={{ fontSize: 20, mb: 2 }}>
+            <b>Статус:</b> {packInfo.Status}
+          </Typography>
+          <Typography sx={{ fontSize: 20, mb: 2 }}>
+            <b>Запланований час доставки:</b> {packInfo.ScheduledDeliveryDate}
+          </Typography>
+          <Typography sx={{ fontSize: 20 }}>
+            <b>Відправлено:</b>
+          </Typography>
+          <Typography sx={{ fontSize: 20, mb: 2 }}>
+            {packInfo.WarehouseSender}
+          </Typography>
+          <Typography sx={{ fontSize: 20 }}>
+            <b>Отримано:</b>
+          </Typography>
+          <Typography sx={{ fontSize: 20, mb: 2 }}>
+            {packInfo.WarehouseRecipientAddress}
+          </Typography>
+        </Box>
       ) : (
         <NotificationDoc />
       )}
+      <ToastContainer />
     </>
   );
 };
