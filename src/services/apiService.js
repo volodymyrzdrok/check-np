@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { KEY_API, NP_URL } from '../utils/constants';
+export const per_page = '12';
 
 export async function fetchPackageDetails(ttn_number) {
   try {
@@ -22,21 +23,22 @@ export async function fetchPackageDetails(ttn_number) {
   }
 }
 
-export async function fetchDepartamentsList(city_name) {
+export async function fetchDepartamentsList(city_name, page = 1) {
   try {
-    const { data } = await axios.post(NP_URL, {
+    const resp = await axios.post(NP_URL, {
       apiKey: KEY_API,
       modelName: 'Address',
       calledMethod: 'getWarehouses',
       methodProperties: {
         CityName: city_name,
 
-        Page: '1',
-        Limit: '50',
+        Page: page,
+        Limit: per_page,
         Language: 'UA',
       },
     });
-    return data;
+
+    return resp.data;
   } catch (error) {
     console.error(error);
   }

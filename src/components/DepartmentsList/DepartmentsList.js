@@ -1,40 +1,37 @@
-import { useState } from 'react';
-import { fetchDepartamentsList } from 'services/apiService';
+import { useEffect, useState, useCallback } from 'react';
+import { fetchDepartamentsList, per_page } from 'services/apiService';
 import { Button, Box, TextField, Stack } from '@mui/material';
 import { useFormik } from 'formik';
 import { nameCityShema } from 'utils/validations';
 import { brackToMobile } from 'utils/constants';
 import { useMediaQuery } from 'react-responsive';
-import { styled } from '@mui/material/styles';
-import Paper from '@mui/material/Paper';
 import Loader from 'components/Loader/Loader';
 import NotificationDoc from 'components/NotificationDoc/NotificationDoc';
 import { ToastContainer, toast } from 'react-toastify';
 import { settingAlert } from 'utils/settingAlert';
-
-const Item = styled(Paper)(({ theme }) => ({
-  backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
-  ...theme.typography.body2,
-  padding: theme.spacing(1),
-
-  color: theme.palette.text.secondary,
-}));
+import { Item } from './Item';
+import BasicPagination from 'components/Pagination/Pagination';
 
 const DepartmentsList = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [depList, setDepList] = useState([]);
   const toMobile = useMediaQuery({ query: brackToMobile });
-  const formik = useFormik({
-    initialValues: {
-      city: '',
-    },
-    validationSchema: nameCityShema,
-    onSubmit: async ({ city }) => {
+  const [page, setPage] = useState(1);
+  const [count, setCount] = useState(10);
+  const [cityNameValue, setCityNameValue] = useState('');
+
+  const changePagination = (e, p) => {
+    setPage(p);
+  };
+
+  const getDepartList = useCallback(
+    async cityName => {
       setIsLoading(true);
       try {
-        const { data } = await fetchDepartamentsList(city);
-        setDepList(data);
-        if (data.length === 0) {
+        const resp = await fetchDepartamentsList(cityName, page);
+        setDepList(resp.data);
+        setCount(Math.ceil(resp.info.totalCount / per_page));
+        if (resp.data.length === 0) {
           toast.error('Напишіть правильно назву вашого міста', settingAlert());
         }
       } catch (err) {
@@ -42,6 +39,25 @@ const DepartmentsList = () => {
       } finally {
         setIsLoading(false);
       }
+    },
+    [page]
+  );
+
+  useEffect(() => {
+    if (cityNameValue) {
+      getDepartList(cityNameValue, page);
+    }
+  }, [page, cityNameValue, getDepartList]);
+
+  const formik = useFormik({
+    initialValues: {
+      city: '',
+    },
+    validationSchema: nameCityShema,
+    onSubmit: ({ city }) => {
+      setCityNameValue(city.trim());
+      setPage(1);
+      getDepartList(city, 1);
     },
   });
 
@@ -84,20 +100,28 @@ const DepartmentsList = () => {
       {isLoading ? (
         <Loader />
       ) : depList.length > 0 ? (
-        <Box sx={{ width: '100%' }} component="ul">
-          <Stack spacing={2}>
-            {depList.map(({ SiteKey, Description }) => (
-              <Item key={SiteKey} component="li">
-                {Description}
-              </Item>
-            ))}
-          </Stack>
-        </Box>
+        <>
+          <Box sx={{ width: '100%' }} component="ul">
+            <Stack spacing={1}>
+              {depList.map(({ SiteKey, Description }) => (
+                <Item key={SiteKey} component="li">
+                  {Description}
+                </Item>
+              ))}
+            </Stack>
+          </Box>
+          <BasicPagination
+            count={count}
+            page={page}
+            changePagination={changePagination}
+          />
+        </>
       ) : (
         <NotificationDoc
           title={'Напишіть назву міста українською, щоб знайти відділення'}
         />
       )}
+
       <ToastContainer />
     </>
   );
